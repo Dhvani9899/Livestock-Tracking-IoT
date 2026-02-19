@@ -1,0 +1,29 @@
+#include <TinyGPS++.h>
+#include <SoftwareSerial.h>
+
+TinyGPSPlus gps;
+SoftwareSerial GPS(3, 4);
+
+void setup()
+{
+  Serial.begin(9600);
+  GPS.begin(9600);
+  Serial.println("Program started");
+}
+
+void loop()
+{
+  if (GPS.available() > 0)
+  {
+    gps.encode(GPS.read());
+
+    if (gps.location.isUpdated())
+    {
+      Serial.print("Latitude = ");
+      Serial.print(gps.location.lat(), 6);
+      Serial.print(" Longitude = ");
+      Serial.println(gps.location.lng(), 6);
+    }
+  }
+}
+
